@@ -209,5 +209,43 @@ print(min(str1))    # Output: ' '
 str1 = 'Hello, World!'
 print(str1[::-1])    # Output: !dlroW ,olleH
 
+# Example 40: Reversing a string
+str1 = 'Hello, World!'
+print(''.join(reversed(str1)))    # Output: !dlroW ,olleH
+
+# Example 41: Checking if a string starts with a substring
+str1 = 'Hello, World!'
+print(str1.startswith('Hello'))    # Output: True
+
+# Example 42: Checking if a string ends with a substring
+str1 = 'Hello, World!'
+print(str1.endswith('World!'))    # Output: True
+
+# Example 43: Expanding tabs in a string
+str1 = 'Hello, World!'
+print(str1.expandtabs(16))    # Output: Hello, World!
+
+# Example 44: Finding the index of a substring
+str1 = 'Hello, World!'
+print(str1.find('World'))    # Output: 7
+
+# Example 45: Finding the index of a substring
+str1 = 'Hello, World!'
+print(str1.rfind('o'))    # Output: 8
+
+# Example 46: Finding the index of a substring
+str1 = 'Hello, World!'
+print(str1.index('World'))    # Output: 7
+
+# Example 47: f strings
+name = 'Alice'
+age = 10
+print(f'{name} is {age} years old.')    # Output: Alice is 10 years old.
+
+# Example 48: f strings
+name = 'Alice'
+age = 10
+print(f'{name} is {age} years old.')    # Output: Alice is 10 years old.
+
 
 
