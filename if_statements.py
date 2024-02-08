@@ -35,3 +35,30 @@ if x > y:
 # 6. To check if a user is blocked
 # 7. To check if a user is banned
 # 8. To check if a user is suspended
+    
+# Example 3: Using the if else statement
+    
+x = 10
+y = 20
+
+if x > y:
+    print("x is greater than y")
+else:
+    print("x is less than y")
+
+
+# Output: x is less than y
+    
+# Example 4: Using the if elif else statement
+x = 10
+y = 20
+
+if x > y:
+    print("x is greater than y")
+elif x < y:
+    print("x is less than y")
+else:
+    print("x is equal to y")
+
+# Output: x is less than y
+
