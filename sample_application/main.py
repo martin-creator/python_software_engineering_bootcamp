@@ -75,18 +75,77 @@ def get_user(user: User):
 
 @app.post("/user/{user_id}/{company_id}", response_model=User)
 def get_user_by_id(user_id: int, company_id:int):
+    """
+    Get the details of a user by user ID and company ID.
+
+    Endpoint: /user/{user_id}/{company_id}
+    Method: POST
+    Access: Public
+
+    Args:
+    - user_id: The ID of the user.
+    - company_id: The ID of the company.
+
+    Returns:
+    - 201 Created: Item created successfully.
+    - 401 Unauthorized: Invalid token provided.
+
+    Example:
+    ```
+    {
+        "user_id": 123,
+        "company_id": 456
+    }
+    ```
+    
+    """
     print(f'User ID: {user_id} and Company ID: {company_id}')
     user = get_user_info(user_id)
     return user
 
 @app.post("/user/{user_id}", response_model=User)
 def create_user(user: User):
+    """
+    Create a new user.
+
+    Endpoint: /user/{user_id}
+    Method: POST
+    Access: Public
+
+    Args:
+    - user_id: The ID of the user.
+
+    Returns:
+    - 201 Created: Item created successfully.
+    - 401 Unauthorized: Invalid token provided.
+
+    Example:
+    ```
+    {
+        "user_id": 123
+    }
+    ```
+    
+    """
     user = create_user(user)
     return user
 
 @app.get("/users", response_model=List[User])
 def get_users_pagination(page:int, limit:int):
     return {"page": page, "limit": limit}
+
+
+@app.put("/user/{user_id}", response_model=User)
+def update_user(user_id: int, user: User):
+    return {"user_id": user_id, "user": user.dict()}
+
+@app.delete("/user/{user_id}", response_model=User)
+def delete_user(user_id: int):
+    return {"user_id": user_id}
+
+# The difference between post and put is that post is used to create a new resource, while put is used to update an existing resource.
+# Patch is used to update a resource with partial data, while put is used to update a resource with full data.
+
 
 # Pagination
 # Pagination is a technique used to divide a large set of data into smaller parts, or pages, to make it easier to manage and navigate.
