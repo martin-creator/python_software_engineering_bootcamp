@@ -56,6 +56,8 @@ def get_user_info(user_id:str = None)-> (str,str):
 
     return  FullUserProfile(**full_user_profile)
 
+def create_user(user: User):
+    return user.dict()
 
 
 @app.get("/", response_class=JSONResponse)
@@ -76,4 +78,91 @@ def get_user_by_id(user_id: int, company_id:int):
     print(f'User ID: {user_id} and Company ID: {company_id}')
     user = get_user_info(user_id)
     return user
+
+@app.post("/user/{user_id}", response_model=User)
+def create_user(user: User):
+    user = create_user(user)
+    return user
+
+@app.get("/users", response_model=List[User])
+def get_users_pagination(page:int, limit:int):
+    return {"page": page, "limit": limit}
+
+# Pagination
+# Pagination is a technique used to divide a large set of data into smaller parts, or pages, to make it easier to manage and navigate.
+# It is commonly used in web applications to display a large number of items in a list or table.
+# Pagination is often used in combination with sorting and filtering to provide a better user experience.
+# Types of pagination include:
+# - Offset-based pagination: This method uses an offset and limit to specify the range of items to return.
+# - Cursor-based pagination: This method uses a cursor to specify the starting point of the next page of items.
+# - Keyset pagination: This method uses a keyset to specify the starting point of the next page of items.
+
+# Example:
+from typing import List
+
+def get_users(page: int, limit: int) -> List[User]:
+    # Query the database for users
+    users = [
+        {"name": "John Doe", "age": 25, "email": "marta@", "liked_posts": [1, 2, 3]},
+        {"name": "Jane Smith", "age": 30, "email": "jane@", "liked_posts": [4, 5, 6]},
+        {"name": "Bob Johnson", "age": 35, "email": "bob@", "liked_posts": [7, 8, 9]},
+    ]
+    return [User(**user) for user in users]
+
+# Sorting
+# Sorting is the process of arranging items in a specific order, such as ascending or descending.
+# It is commonly used to organize data in a more meaningful way and make it easier to find and analyze.
+# Sorting can be done based on one or more fields, and can be done in ascending or descending order.
+# Example:
+from typing import List
+
+def sort_users(users: List[User], field: str, order: str) -> List[User]:
+    # Sort the users based on the specified field and order
+    if order == "asc":
+        users.sort(key=lambda user: getattr(user, field))
+    else:
+        users.sort(key=lambda user: getattr(user, field), reverse=True)
+    return users
+
+# Filtering
+# Filtering is the process of selecting a subset of items from a larger set based on specific criteria.
+# It is commonly used to narrow down the data to only the items that meet certain conditions.
+# Filtering can be done based on one or more fields, and can be done using various comparison operators.
+# Example:
+from typing import List
+
+def filter_users(users: List[User], field: str, value: str) -> List[User]:
+    # Filter the users based on the specified field and value
+    return [user for user in users if getattr(user, field) == value]
+
+# Combining pagination, sorting, and filtering
+
+# Pagination, sorting, and filtering can be combined to provide a more powerful and flexible way to manage and navigate large sets of data.
+# For example, users can be paginated, sorted, and filtered based on various criteria to provide a better user experience.
+# Example:
+from typing import List
+
+def get_users(page: int, limit: int, sort_field: str, sort_order: str, filter_field: str, filter_value: str) -> List[User]:
+    # Query the database for users
+    users = [
+        {"name": "John Doe", "age": 25, "email": "msdf@", "liked_posts": [1, 2, 3]},
+        {"name": "Jane Smith", "age": 30, "email": "jane@", "liked_posts": [4, 5, 6]},
+        {"name": "Bob Johnson", "age": 35, "email": "bob@", "liked_posts": [7, 8, 9]},
+    ]
+    users = [User(**user) for user in users]
+
+    # Sort the users based on the specified field and order
+    if sort_field:
+        users = sort_users(users, sort_field, sort_order)
+
+    # Filter the users based on the specified field and value
+    if filter_field:
+        users = filter_users(users, filter_field, filter_value)
+
+    # Paginate the users based on the specified page and limit
+    start_index = (page - 1) * limit
+    end_index = start_index + limit
+
+    return users[start_index:end_index]
+
     
