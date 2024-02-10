@@ -33,7 +33,7 @@ class FullUserProfile(BaseModel):
     long_bio: str
 
 
-def get_user_info()-> (str,str):
+def get_user_info(user_id:str = None)-> (str,str):
     user_content = {
         "name": "John Doe",
         "age": 25,
@@ -67,7 +67,13 @@ def test_endpoint():
     return "Mic check 1, 2, 3..."
 
 @app.post("/user", response_model=User)
-def create_user(user: User):
+def get_user(user: User):
     user = get_user_info()
+    return user
+
+@app.post("/user/{user_id}/{company_id}", response_model=User)
+def get_user_by_id(user_id: int, company_id:int):
+    print(f'User ID: {user_id} and Company ID: {company_id}')
+    user = get_user_info(user_id)
     return user
     
