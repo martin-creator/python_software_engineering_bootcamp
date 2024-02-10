@@ -5,6 +5,13 @@ from typing import List,Optional
 
 app = FastAPI()
 
+# Asynchronous programming is a programming paradigm that allows multiple tasks to be executed concurrently, or in parallel.
+# It is commonly used in web applications to improve performance and responsiveness.
+# Asynchronous programming can be achieved using various techniques, such as callbacks, promises, and coroutines.
+# In Python, asynchronous programming is commonly done using the `async` and `await` keywords, which allow functions to be executed asynchronously.
+# The difference between a coroutine and a regular function is that a coroutine can be paused and resumed, while a regular function cannot.
+# The difference betweene a couroutine and promise is that a coroutine is a function that can be paused and resumed, while a promise is an object that represents the eventual result of an asynchronous operation.
+
 
 
 class User(BaseModel):
@@ -33,7 +40,7 @@ class FullUserProfile(BaseModel):
     long_bio: str
 
 
-def get_user_info(user_id:str = None)-> (str,str):
+async def get_user_info(user_id:str = None)-> (str,str):
     user_content = {
         "name": "John Doe",
         "age": 25,
@@ -69,8 +76,8 @@ def test_endpoint():
     return "Mic check 1, 2, 3..."
 
 @app.post("/user", response_model=User)
-def get_user(user: User):
-    user = get_user_info()
+async def get_user(user: User):
+    user =  await get_user_info()
     return user
 
 @app.post("/user/{user_id}/{company_id}", response_model=User)
@@ -100,11 +107,13 @@ def get_user_by_id(user_id: int, company_id:int):
     
     """
     print(f'User ID: {user_id} and Company ID: {company_id}')
+    # Print documentation of this endpoint
+    print(get_user_by_id.__doc__)
     user = get_user_info(user_id)
     return user
 
 @app.post("/user/{user_id}", response_model=User)
-def create_user(user: User):
+async def create_user(user: User):
     """
     Create a new user.
 
@@ -125,7 +134,7 @@ def create_user(user: User):
         "user_id": 123
     }
     ```
-    
+
     """
     user = create_user(user)
     return user
